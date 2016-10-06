@@ -5,6 +5,14 @@ from selenium.common.exceptions import WebDriverException
 class _FormElementKeywords(KeywordGroup):
 
     # Public, form
+    def remove_style(self, locator):
+        element = self._element_find(locator, True, True)
+        self._current_browser().execute_script('arguments[0].removeAttribute("style"); arguments[0].style["margin-left"] = 0;', element)
+
+#    def remove_style(self, driver, element):
+#        driver.execute_script('arguments[0].removeAttribute("style"); arguments[0].style["margin-left"] = 0;', element)
+
+        
 
     def submit_form(self, locator=None):
         """Submits a form identified by `locator`.
@@ -179,6 +187,7 @@ class _FormElementKeywords(KeywordGroup):
             raise AssertionError("File '%s' does not exist on the local file system"
                         % file_path)
         self._element_find(locator, True, True).send_keys(file_path)
+
 
     def input_password(self, locator, text):
         """Types the given password into text field identified by `locator`.
